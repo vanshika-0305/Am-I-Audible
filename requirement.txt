@@ -1,0 +1,4 @@
+https://www.kaggle.com/datasets/gaurav41/voxceleb1-audio-wav-files-for-india-celebrity
+https://www.kaggle.com/datasets/rushibalajiputthewad/sound-classification-of-animal-voice
+https://www.kaggle.com/datasets/irmiot22/fsc22-dataset
+https://www.kaggle.com/datasets/soumendraprasad/sound-of-114-species-of-birds-till-2022
