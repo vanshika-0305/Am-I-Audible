@@ -33,7 +33,6 @@ def split_audio(input_path, output_path, clip_length=5000):
         # Save the clip as WAV
         clip_filename = os.path.join(output_path, f"{os.path.basename(input_path).split('.')[0]}clip_{i + 1}.wav")
         clip.export(clip_filename, format="wav")
-        print(f"Saved {clip_filename}")
 
 # input_root = os.path.join(os.getcwd(), 'birdclipswav')
 # output_root = os.path.join(os.getcwd(), 'birds_spectrograms')
@@ -73,7 +72,6 @@ def process_audio_files(input_root, output_root, min_files=10):
         min_files (int): Minimum number of files in a folder to be processed.
     """
     for root, _, files in os.walk(input_root):
-        print(f"Processing: {root}")
         if len(files) < min_files:
             continue  # Skip directories with fewer files than min_files
         
