@@ -1,0 +1,8 @@
+pydub
+pandas
+numpy
+matplotlib
+librosa
+tensorflow
+flask
+opencv-python

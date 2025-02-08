@@ -8,7 +8,7 @@ import datetime
 import statistics as st
 
 
-model = load_model(os.path.join(os.getcwd(), "Models/bird_classification_model/birds_model.h5"))
+model = load_model(os.path.join(os.getcwd(), "Models/bird_classification_model/birds_model2.h5"))
 
 app = Flask(__name__)
 
@@ -38,8 +38,8 @@ def upload_audio():
 
     try:
         predicted_class = predict(model, now, filepath)
-        predicted_class = str(st.mode(predicted_class))
-        return jsonify({"prediction": predicted_class, "text": "File uploaded successfully"})
+        predicted_class = st.mode(predicted_class)
+        return jsonify({"prediction": classes[predicted_class], "text": "File uploaded successfully"})
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500

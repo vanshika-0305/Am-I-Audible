@@ -3,20 +3,17 @@ import tensorflow as tf
 from keras.models import load_model
 from utils import preprocessing
 from keras.models import load_model
-import cv2
+from keras.preprocessing import image
 import numpy as np
 
 # classes = os.listdir("birds_spectrograms")
 
-def read_image(path):
-    image = cv2.imread(path)
-    if image is None:
-        print("Error: Image not found or failed to load!")
-    else:
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        image = cv2.resize(image, (128, 128), interpolation = cv2.INTER_LINEAR)
-        image = image.reshape((1, 128, 128, 1)) / 255
-    return image
+def preprocess_image(img_path, target_size=(128, 128)):
+    img = image.load_img(img_path, color_mode="grayscale", target_size=target_size)
+    img_array = image.img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+    img_array /= 255.0  # Normalize same as training
+    return img_array
 
 def predict(model, time, file):
     root = os.getcwd()
@@ -30,13 +27,14 @@ def predict(model, time, file):
     os.makedirs(os.path.join(spectrograms, f"{time}"), exist_ok=True)
     preprocessing.process_audio_files(
         os.path.join(root, f"UserData/{time}"),
-        os.path.join(spectrograms, f"{time}")
+        os.path.join(spectrograms, f"{time}"),
+        min_files=0
     )
     prediction = []
     for root, _, files in os.walk(spectrograms):
         for file in files:
             print(os.path.join(root,file))
-            image = read_image(os.path.join(root,file))
+            image = preprocess_image(os.path.join(root,file))
             prediction.append(np.argmax(model.predict(image)))
     
     return prediction
