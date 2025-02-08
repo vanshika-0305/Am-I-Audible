@@ -13,19 +13,19 @@ from utils.config import Parameters
 parameters = Parameters()
 
 # Argument parser for command-line input
-# parser = argparse.ArgumentParser(description="Train a CNN model on bird spectrograms")
-# parser.add_argument("--data_path", type=str, required=True, help="Path to the dataset")
-# args = parser.parse_args()
+parser = argparse.ArgumentParser(description="Train a CNN model on bird spectrograms")
+parser.add_argument("--data_path", type=str, required=True, help="Path to the dataset")
+args = parser.parse_args()
 
 # for preprocessing
-# user_preprocessing_bird(os.path.join(args.data_path, "Voice of Birds/Voice of Birds"))
+user_preprocessing_bird(os.path.join(args.data_path, "Voice of Birds/Voice of Birds"))
 
 # Early stopping
 early_stopping = EarlyStopping(monitor='val_accuracy', patience=5, restore_best_weights=True)
 
 # Load dataset
 train_ds = image_dataset_from_directory(
-    "/Users/ginger/Developer/Turing/birds_spectrograms",
+    os.path.join(os.getcwd(), "birds_spectrograms"),
     labels='inferred',
     label_mode='categorical',
     color_mode='grayscale',
@@ -36,7 +36,7 @@ train_ds = image_dataset_from_directory(
     subset='training')
 
 validation_ds = image_dataset_from_directory(
-    "/Users/ginger/Developer/Turing/birds_spectrograms",
+    os.path.join(os.getcwd(), "birds_spectrograms"),
     labels='inferred',
     label_mode='categorical',
     color_mode='grayscale',
